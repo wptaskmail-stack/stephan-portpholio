@@ -1,0 +1,43 @@
+{
+  "name": "stephan-portfolio",
+  "version": "1.0.0",
+  "description": "Photography portfolio for stephanrozario.com — Next.js + Payload CMS + Neon + Cloudinary",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap"
+  },
+  "dependencies": {
+    "@jhb.software/payload-cloudinary-plugin": "^0",
+    "@payloadcms/db-postgres": "^3",
+    "@payloadcms/email-nodemailer": "^3",
+    "@payloadcms/next": "^3",
+    "@payloadcms/plugin-form-builder": "^3",
+    "@payloadcms/richtext-lexical": "^3",
+    "@payloadcms/ui": "^3",
+    "cloudinary": "^2",
+    "graphql": "^16",
+    "lucide-react": "^0.460.0",
+    "next": "~15.4.11",
+    "nodemailer": "^6",
+    "payload": "^3",
+    "react": "^19",
+    "react-dom": "^19",
+    "sharp": "^0.33",
+    "yet-another-react-lightbox": "^3"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/nodemailer": "^6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "prettier": "^3.8.3",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.20.2"
+  }
+}

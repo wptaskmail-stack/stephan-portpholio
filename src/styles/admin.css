@@ -1,0 +1,220 @@
+/* ============================================================================
+   Stephan Rozario — custom admin theme for Payload 3
+   Two looks share one palette: a warm editorial LIGHT ("white") mode and a warm
+   near-black DARK mode, both accented with the site terracotta.
+
+   How it works:
+   - Payload derives its whole UI from two CSS ramps: `--color-base-*` (neutral
+     greys) and `--color-success-*` (the default blue accent). bg/text/elevation
+     all map back to `--color-base-*`, so re-tinting that ramp warms BOTH themes
+     automatically. Re-tinting `--color-success-*` re-accents links/active/
+     selection in BOTH themes (Payload inverts the ramp for dark itself).
+   - Payload ships its tokens inside `@layer payload-default`; these unlayered
+     overrides therefore win regardless of source order.
+   ========================================================================== */
+
+/* ---- per-theme brand accent (used by the component polish below) ---------- */
+html[data-theme='light'] {
+  --sr-accent: #a8553a;
+  --sr-accent-hover: #8f4630;
+  --sr-accent-tint: rgba(168, 85, 58, 0.1);
+  --sr-shadow: rgba(40, 30, 20, 0.08);
+}
+html[data-theme='dark'] {
+  --sr-accent: #cb8a5e;
+  --sr-accent-hover: #d99e76;
+  --sr-accent-tint: rgba(203, 138, 94, 0.14);
+  --sr-shadow: rgba(0, 0, 0, 0.4);
+}
+
+/* ---- 1. warm neutral ramp (re-tints every grey, both themes) ------------- */
+:root {
+  --color-base-0: rgb(250, 248, 244);
+  --color-base-50: rgb(244, 241, 235);
+  --color-base-100: rgb(236, 232, 224);
+  --color-base-150: rgb(223, 217, 205);
+  --color-base-200: rgb(209, 202, 188);
+  --color-base-250: rgb(195, 187, 171);
+  --color-base-300: rgb(181, 172, 154);
+  --color-base-350: rgb(167, 158, 140);
+  --color-base-400: rgb(151, 142, 124);
+  --color-base-450: rgb(136, 127, 110);
+  --color-base-500: rgb(122, 113, 98);
+  --color-base-550: rgb(106, 98, 84);
+  --color-base-600: rgb(91, 84, 71);
+  --color-base-650: rgb(76, 70, 58);
+  --color-base-700: rgb(62, 57, 47);
+  --color-base-750: rgb(49, 45, 37);
+  --color-base-800: rgb(37, 33, 27);
+  --color-base-850: rgb(28, 25, 20);
+  --color-base-900: rgb(20, 17, 13);
+  --color-base-950: rgb(12, 10, 7);
+  --color-base-1000: rgb(0, 0, 0);
+
+  /* 2. terracotta accent ramp (re-accents links/active/selection both themes) */
+  --color-success-50: rgb(249, 239, 233);
+  --color-success-100: rgb(243, 221, 209);
+  --color-success-150: rgb(236, 200, 182);
+  --color-success-200: rgb(227, 179, 155);
+  --color-success-250: rgb(217, 158, 128);
+  --color-success-300: rgb(205, 135, 99);
+  --color-success-350: rgb(192, 115, 75);
+  --color-success-400: rgb(181, 97, 63);
+  --color-success-450: rgb(177, 92, 62);
+  --color-success-500: rgb(168, 85, 58);
+  --color-success-550: rgb(152, 76, 51);
+  --color-success-600: rgb(135, 67, 45);
+  --color-success-650: rgb(118, 58, 39);
+  --color-success-700: rgb(101, 50, 33);
+  --color-success-750: rgb(84, 41, 27);
+  --color-success-800: rgb(68, 33, 21);
+  --color-success-850: rgb(52, 25, 15);
+  --color-success-900: rgb(36, 17, 10);
+  --color-success-950: rgb(22, 10, 6);
+
+  /* softer, rounder shapes throughout */
+  --style-radius-s: 5px;
+  --style-radius-m: 8px;
+  --style-radius-l: 14px;
+}
+
+/* slightly softer dividers than the default elevation-150 */
+html[data-theme='light'] {
+  --theme-border-color: var(--theme-elevation-100);
+}
+
+/* ---- 3. component polish ------------------------------------------------- */
+
+/* Primary buttons → terracotta (they default to a neutral elevation grey) */
+html .btn--style-primary {
+  --bg-color: var(--sr-accent);
+  --color: #fff;
+  --hover-bg: var(--sr-accent-hover);
+  --hover-color: #fff;
+}
+
+/* Native form accents (checkboxes, radios, range, selection) */
+html {
+  accent-color: var(--sr-accent);
+}
+::selection {
+  background: var(--sr-accent-tint);
+}
+
+/* Sidebar nav: accent the active item + its indicator dot */
+.nav .nav__link.active {
+  color: var(--sr-accent);
+}
+.nav .nav__link:hover {
+  color: var(--sr-accent);
+}
+.nav .nav__link-indicator {
+  background: var(--sr-accent) !important;
+}
+
+/* Tabs (e.g. the Site settings screen): accent the active tab + underline */
+.tabs-field__tab-button:hover {
+  color: var(--sr-accent);
+}
+.tabs-field__tab-button--active {
+  color: var(--sr-accent);
+  box-shadow: inset 0 -2px 0 0 var(--sr-accent);
+}
+
+/* Inputs / selects / rich-text: rounded with a terracotta focus ring */
+.field-type input:not([type='checkbox']):not([type='radio']),
+.field-type textarea,
+.field-type .rs__control,
+.field-type .code-editor {
+  border-radius: var(--style-radius-s);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.field-type input:not([type='checkbox']):not([type='radio']):focus,
+.field-type textarea:focus,
+.field-type .rs__control--is-focused {
+  border-color: var(--sr-accent) !important;
+  box-shadow: 0 0 0 3px var(--sr-accent-tint) !important;
+  outline: none;
+}
+
+/* Cards / dashboard tiles: rounded, soft border, lift + accent on hover */
+.card,
+.dashboard__card {
+  border-radius: var(--style-radius-m);
+  border: 1px solid var(--theme-elevation-100);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.card:hover,
+.dashboard__card:hover {
+  border-color: var(--sr-accent);
+  box-shadow: 0 6px 18px var(--sr-shadow);
+  transform: translateY(-1px);
+}
+
+/* Tables: lighter header, zebra rows, terracotta row hover */
+.table thead tr th {
+  border-bottom: 1px solid var(--theme-elevation-150);
+  color: var(--theme-elevation-600);
+  font-weight: 600;
+}
+.table tbody tr:nth-child(even) {
+  background: var(--theme-elevation-50);
+}
+.table tbody tr:hover {
+  background: var(--sr-accent-tint);
+}
+
+/* Pills (relationship/array/status chips) pick up the accent tint */
+.pill--style-light {
+  border-radius: 999px;
+}
+
+/* --- "Choose from existing" drawer: make the multi-select confirm obvious ---
+   Picking several photos requires ticking the row checkboxes, which reveals
+   Payload's "Select N" pill (the SelectMany confirm). It defaults to a white
+   pill on a near-white background, so it was invisible in this theme. */
+
+/* White pills get a real border so they never blend into the background. */
+.pill--style-white {
+  border: 1px solid var(--theme-elevation-200);
+}
+
+/* The selection-actions bar becomes a clear terracotta confirm when something
+   is selected (:has keeps it neutral when the bar is empty). */
+.collection-list__list-selection:has(.pill) {
+  background: var(--sr-accent-tint);
+  border: 1px solid var(--sr-accent);
+  border-radius: var(--style-radius-m);
+  padding: 6px 10px;
+}
+.collection-list__list-selection .pill {
+  background: var(--sr-accent) !important;
+  color: #fff !important;
+  border: none;
+}
+.collection-list__list-selection .pill:hover {
+  background: var(--sr-accent-hover) !important;
+}
+
+/* Ticked rows get a subtle highlight so the checkbox path is discoverable. */
+.collection-list .table tr:has(input:checked) {
+  background: var(--sr-accent-tint);
+}
+
+/* ---- 4. login screen ----------------------------------------------------- */
+.login {
+  background:
+    radial-gradient(1100px 520px at 50% -10%, var(--sr-accent-tint), transparent 70%),
+    var(--theme-bg);
+}
+.login__brand {
+  margin-bottom: 28px;
+}
+.login__form,
+.login .form {
+  background: var(--theme-elevation-0);
+  border: 1px solid var(--theme-elevation-100);
+  border-radius: var(--style-radius-l);
+  padding: 30px 28px;
+  box-shadow: 0 18px 50px var(--sr-shadow);
+}
