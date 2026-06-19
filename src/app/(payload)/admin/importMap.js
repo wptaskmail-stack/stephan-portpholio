@@ -63,4 +63,6 @@ export const importMap = {
   "@/components/admin/BeforeLogin#BeforeLogin": BeforeLogin_89344134860f9bc63867ffefbf33f214,
   "@jhb.software/payload-cloudinary-plugin/client#CloudinaryClientUploadHandler": CloudinaryClientUploadHandler_d082512b0d29edcf3859a7c92c33e4db,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+
+
 }
